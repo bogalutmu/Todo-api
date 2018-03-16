@@ -47,6 +47,20 @@ app.get('/',function(req,res){
 	res.send('Todo API Root');
 });
 
+app.delete('/todos/:id',function(req,res){
+	var todoId=parseInt(req.params.id,10);
+	var matchedToDo=_.findWhere(todos,{id:todoId});
+
+	if(matchedToDo){
+		todos=_.without(todos,matchedToDo);
+		res.json(matchedToDo);
+
+	}else{
+		res.status(404).json({"error":"no todo found that id "});
+	}
+
+});
+
 app.listen(PORT, function(){
 	console.log('Express listenin on PORT'+PORT+'!');
 })
